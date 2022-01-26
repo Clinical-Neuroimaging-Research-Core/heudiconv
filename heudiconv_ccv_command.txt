@@ -1,0 +1,31 @@
+#copy this into the command line first to set environment variables
+studydir="/gpfs/data/nmclaugh/conte"
+img="/gpfs/home/edeluca2/heudiconv_latest.sif"
+
+interact -n 1 -t 02:00:00 -m 16g
+
+#copy this into the command line to generate the hidden info folder
+singularity run --cleanenv \
+	    -B ${studydir}:/base \
+	    -e ${img} \
+	    -d /base/sourcedata/sub-{subject}/ses-{session}/*/*.dcm \
+	    -o /base/rawdata \
+	    -f convertall \
+	    -c none \
+	    -s 436 \
+	    -ss 01  
+
+#copy into command line to run heudiconv    
+singularity run --cleanenv \
+	    -B ${studydir}:/base \
+	    -e ${img} \
+	    -d /base/sourcedata/sub-{subject}/ses-{session}/*/*.dcm \
+	    -o /base/rawdata \
+	    -f /base/code/heuristic_revised.py \
+	    -c dcm2niix \
+	    -s 426 \
+	    -ss 01 \
+	    -b
+
+
+	    
