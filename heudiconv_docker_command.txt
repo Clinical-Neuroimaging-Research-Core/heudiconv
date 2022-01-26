@@ -1,0 +1,1 @@
+docker run --rm -it -v /Volumes/Pegasus/nstb:/base nipy/heudiconv:latest -d /base/sourcedata/sub-{subject}/ses-{session}/*/* -o /base/rawdata/ -f /base/code/heuristic.py -s 7001 -ss 01 -c dcm2niix -b --overwrite
